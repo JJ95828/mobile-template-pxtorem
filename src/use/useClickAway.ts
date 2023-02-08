@@ -12,12 +12,4 @@ export default (target: Element | Ref<Element | null>, listener: EventListener) 
     }
   }
   document.addEventListener('click', onClick)
-  // const weekMap = new WeakMap()
-  // weekMap.set('ele', target)
-  // watch(
-  //   () => target,
-  //   (val) => {
-  //     if (!val) document.removeEventListener('click', onClick)
-  //   }
-  // )
 }

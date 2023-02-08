@@ -8,7 +8,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import progress from 'vite-plugin-progress' // 打包进度条
 import legacy from '@vitejs/plugin-legacy'
 import Inspect from 'vite-plugin-inspect'
-import pxToREM from './vite-plugin-pxtorem'
+import pxtorem from './vite-plugin-pxtorem'
 // https://vitejs.dev/config/
 const config = (type: string) => {
   const isAnalyse = type === 'analyse'
@@ -16,7 +16,6 @@ const config = (type: string) => {
     base: './', // 根路径
     publicDir: 'public',
     server: {
-      // https: true,
       /**
        * 使用axios('/4.0/你的路径').then(res => console.log(res))
        */
@@ -35,7 +34,7 @@ const config = (type: string) => {
         outputDir: '.vite-inspect'
       }),
       vue(),
-      pxToREM({ ignore: ['cover/index.vue', 'pages/index.less'] }),
+      pxtorem({ ignore: ['cover/index.vue', 'pages/index.less'] }),
       progress(), // 打包进度条
       legacy({
         // 处理 import.meta <script nomodule>
