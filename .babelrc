@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    "transform-vue-jsx",
+    [
+      "import",
+      {
+        "libraryName": "vant",
+        "style": true
+      }
+    ]
+  ]
+}

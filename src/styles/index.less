@@ -1,0 +1,119 @@
+@import url('./reset.less');
+@import url('./transition.less');
+@import url('./mixins.less');
+@import url('./pages/index.less');
+
+body,
+html {
+  font-family: system-ui, 'SourceHanSansCN Regular';
+}
+
+.img-100 {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+.clearfix {
+  zoom: 1;
+}
+.clearfix:after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+@font-face {
+  font-family: 'cq';
+  src: url('font/font.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SourceHanSansCN';
+  src: url('font/SourceHanSansCN.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SourceHanSansCN Regular';
+  src: url('font/SourceHanSansCN-Regular.woff2') format('woff2');
+}
+
+.cq-font {
+  font-size: 69px;
+  font-family: 'cq';
+  font-weight: 400;
+  color: #020202;
+}
+
+// .padding-margin(@i) when (@i >= 0) {
+//   // padding-left | top | right | bottom-0...50 的class name.
+//   .p-l-@{i} {
+//     padding-left: @i * 1px !important;
+//   }
+//   .p-t-@{i} {
+//     padding-top: @i * 1px !important;
+//   }
+//   .p-r-@{i} {
+//     padding-right: @i * 1px !important;
+//   }
+
+//   .p-b-@{i} {
+//     padding-bottom: @i * 1px !important;
+//   }
+
+//   .p-@{i} {
+//     padding: @i * 1px !important;
+//   }
+//   // margin-left | top | right | bottom-0...50 的class name.
+//   .m-l-@{i} {
+//     margin-left: @i * 1px !important;
+//   }
+//   .m-t-@{i} {
+//     margin-top: @i * 1px !important;
+//   }
+//   .m-r-@{i} {
+//     margin-right: @i * 1px !important;
+//   }
+//   .m-b-@{i} {
+//     margin-bottom: @i * 1px !important;
+//   }
+//   .m-@{i} {
+//     margin: @i * 1px !important;
+//   }
+//   // font-size-12 >= 50
+//   .f-s-@{i} when (@i >= 12) {
+//     font-size: @i * 1px !important;
+//   }
+//   .padding-margin((@i - 1));
+// }
+// .padding-margin(50);
+
+@media (max-width: 750px/** no rem*/) {
+  html {
+    font-size: calc(26.666666666666vw / 2);
+    height: 100%;
+  }
+  body {
+    height: 100%;
+  }
+}
+@media screen and (min-width: 750px/** no rem*/) {
+  html {
+    font-size: 100px /** no rem*/;
+    height: 100%;
+  }
+  body {
+    height: 100%;
+  }
+  #root {
+    max-width: 750px; /** no rem*/
+    margin: 0 auto;
+  }
+}

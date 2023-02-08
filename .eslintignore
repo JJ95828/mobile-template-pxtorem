@@ -1,0 +1,7 @@
+build/*.js
+src/assets
+src/utils/download.js
+public
+dist
+production
+testing
