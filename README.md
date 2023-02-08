@@ -1,6 +1,6 @@
-# zmtq-mobile 移动版
+# mobile-template-pxtorem
 ```
-  vite3 + vue3 + ts + pinia + jsx
+  vite3 + vue3 + ts + pinia + jsx + vite-plugin-pxtorem
 ```
 ## 安装运行
 ```
