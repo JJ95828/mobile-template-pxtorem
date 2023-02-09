@@ -34,7 +34,7 @@ const config = (type: string) => {
         outputDir: '.vite-inspect'
       }),
       vue(),
-      pxtorem({ ignore: ['cover/index.vue', 'pages/index.less'] }),
+      pxtorem({ ignore: [] }),
       progress(), // 打包进度条
       legacy({
         // 处理 import.meta <script nomodule>
