@@ -2,6 +2,8 @@ import path from 'path'
 import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import viteCompression from 'vite-plugin-compression'
 import Components from 'unplugin-vue-components/vite'
+import { VantResolver } from 'unplugin-vue-components/resolvers'
+
 import AutoImport from 'unplugin-auto-import/vite'
 import vue from '@vitejs/plugin-vue'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -34,7 +36,7 @@ const config = (type: string) => {
         outputDir: '.vite-inspect'
       }),
       vue(),
-      pxtorem({ ignore: ['cover/index.vue', 'pages/index.less'] }),
+      pxtorem({ ignore: [] }),
       progress(), // 打包进度条
       legacy({
         // 处理 import.meta <script nomodule>
@@ -45,7 +47,8 @@ const config = (type: string) => {
        * 效果为：如 Components文件夹下的组件，我们可以直接使用并有相应的TS语法提示，而不需要手动的去 import CompName from '路径'
        */
       Components({
-        dts: 'src/components.d.ts'
+        dts: 'src/components.d.ts',
+        resolvers: [VantResolver()]
       }),
       /**
        * 自动导入

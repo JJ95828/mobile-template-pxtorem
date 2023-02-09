@@ -33,7 +33,7 @@ export default function pxToREM({ ignore = [] }: OptionsType = {}) {
   /**
    * 匹配px
    */
-  const regExgPx = /[0-9]+[\.]?[0-9]+px(([\n\s\S;\r\f]+)?((\/\*\*|\/\/)(\s+)no(\s+)rem(\*\/)?))?/g
+  const regExgPx = /[0-9]+(\.)?(0-9+)?px(([\n\s\S;\r\f]+)?((\/\*\*|\/\/)(\s+)no(\s+)rem(\*\/)?))?/g
 
   /**
    * px to rem
@@ -136,7 +136,9 @@ export default function pxToREM({ ignore = [] }: OptionsType = {}) {
       if (isVueFile(id)) {
         return compileFile(
           val
-            .replace(/\<template(\s+.)?\>([.\n\s\S]+)\<\/template\>/, (v: string) => transformHandler(v))
+            .replace(/\<template(\s+.)?\>([.\n\s\S]+)\<\/template\>/, (v: string) => {
+              return v.replace(/style\=".+(\n+)?"/g, (target) => transformHandler(target))
+            })
             .replace(/<style(\s\S.+)?>([.\n\s\S]+)<\/style>/, (v: string) => transformHandler(v))
         )
       }
