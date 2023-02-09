@@ -4,7 +4,7 @@
     <p style="font-size: 20px">rem</p>
     <div class="test">111</div>
     <ZMImage src="cat.jpeg" width="2rem" height="2rem" />
-    <ZMImage src="cat.jpeg" width="200px" height="200px" />
+    <ZMImage src="cat.jpeg" width="200" height="200" />
   </div>
   <div style="border: 1px solid #eee; padding: 20px">
     <p style="font-size: 20px">px</p>

@@ -61,9 +61,9 @@ if (!props.src) {
 }
 const type = (val: string | number) => {
   if (typeof val === 'string') {
-    return val
+    if (isNaN(+val)) return val
   }
-  return `${val / 100}rem`
+  return `${+val / 100}rem`
 }
 </script>
 <template>
