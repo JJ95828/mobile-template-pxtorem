@@ -43,8 +43,7 @@
   2. 正常开发直接使用相应数值。
   通过使用vite-plugin-pxtorem插件把px转换为rem。
   忽略转换:  // no rem 或 /** no rem */ 或 20px => 20PX
-  3. 不使用.rem()方法。把相应值（28）直接除100，单位为rem
-  示例： 设计图 28，font-sze: 0.28rem;
+  示例： 设计图 字体大小 28px，font-sze: 28px; 转换后：font-sze: 0.28rem;
 ```
 ## GIT commit 提交规范(推荐):
 
