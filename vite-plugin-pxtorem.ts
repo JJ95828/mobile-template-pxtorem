@@ -1,12 +1,12 @@
 import fs from 'node:fs'
 import path from 'node:path'
-
+type ignoreType = string | RegExp
 interface OptionsType {
   /**
    * 忽略转换的px为rem的文件名称
    * 例：index.less index.css
    */
-  ignore?: string[] | RegExp[] | (string | RegExp)[]
+  ignore?: ignoreType[]
 }
 interface AliasType {
   /**
@@ -28,7 +28,7 @@ export default function pxToREM({ ignore = [] }: OptionsType = {}) {
   /**
    * 忽略文件
    */
-  const ignoreTests = [].concat(/\.(js|ts|mjs|cjs)/, ignore).map((v) => (isRegExp(v) ? v : new RegExp(`${v}`)))
+  const ignoreTests = ([/\.(js|ts|mjs|cjs)/] as ignoreType[]).concat(ignore).map((v) => (isRegExp(v) ? v : new RegExp(`${v}`))) as RegExp[]
 
   /**
    * 匹配px
@@ -45,7 +45,7 @@ export default function pxToREM({ ignore = [] }: OptionsType = {}) {
    * @returns
    */
   function transformHandler(target: string | undefined) {
-    if (!target) return
+    if (!target) return ''
     return target.replace(regExgPx, (arg) => {
       if (arg.includes('no rem')) {
         return arg
@@ -86,7 +86,7 @@ export default function pxToREM({ ignore = [] }: OptionsType = {}) {
     config(conf) {
       config = conf
       if (conf?.resolve?.alias) {
-        let aliasAry = []
+        let aliasAry: { target: string; value: any }[] = []
         if (isArray(conf.resolve.alias)) {
           /**
            * 未处理当前情况
@@ -111,16 +111,20 @@ export default function pxToREM({ ignore = [] }: OptionsType = {}) {
          */
         if (!isVueFile(id) && val.includes('@import')) {
           val = val.replace(/(\/\*\*|\/\/)?(.+)?\@import(url\((\'|\"))?(.+)((\'|\")\))?\;/g, (target) => {
-            let url: string = transformImportUrl(target)
+            let url = transformImportUrl(target)
             if (!url) return target
             let isReplace = false
-            alias.forEach((item: AliasType) => {
-              if (url.includes(item.target) && typeof item.value === 'string') {
-                isReplace = true
-                url = (url as string).replace(item.target, item.value)
-              }
-            })
-            const fullPath = [].concat(!isReplace ? removeNextPath(id) : '').concat(url)
+            alias &&
+              alias.forEach((item: AliasType) => {
+                if (url?.includes(item.target) && typeof item.value === 'string') {
+                  isReplace = true
+                  url = (url as string).replace(item.target, item.value)
+                }
+              })
+            const fullPath = ([] as string[])
+              .concat(!isReplace ? removeNextPath(id) : '')
+              .concat(url.charAt(0) !== '/' ? url.substring(1) : url)
+              .join('')
             /**
              * 不处理忽略文件
              */
@@ -139,7 +143,7 @@ export default function pxToREM({ ignore = [] }: OptionsType = {}) {
             .replace(/\<template(\s+.)?\>([.\n\s\S]+)\<\/template\>/, (v: string) => {
               return v.replace(/style\=".+(\n+)?"/g, (target) => transformHandler(target))
             })
-            .replace(/<style(\s\S.+)?>([.\n\s\S]+)<\/style>/, (v: string) => transformHandler(v))
+            .replace(/<style(\s\S.+)?>([.\n\s\S]+)<\/style>/, (v) => transformHandler(v))
         )
       }
       return compileFile(val, id)
@@ -203,7 +207,7 @@ function pxToRemHandler() {
  * @returns
  */
 function getStyleCodePipe() {
-  const getPath = (url: string[]) => path.join(...url)
+  const getPath = (url: string) => path.join(url)
   const getCss = (url: string) => fs.readFileSync(url, 'utf8')
   return pipe(getPath, getCss)
 }
@@ -213,5 +217,5 @@ function getStyleCodePipe() {
  * @returns
  */
 function isVueFile(str: string) {
-  return /\.(vue)$/.test(str)
+  return /\.(vue)$/.test(str.includes('?') ? str.split('?')[0] : str)
 }

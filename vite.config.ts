@@ -3,6 +3,7 @@ import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import viteCompression from 'vite-plugin-compression'
 import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 import AutoImport from 'unplugin-auto-import/vite'
 import vue from '@vitejs/plugin-vue'
@@ -36,6 +37,7 @@ const config = (type: string) => {
         outputDir: '.vite-inspect'
       }),
       vue(),
+      vueJsx(),
       pxtorem({ ignore: [] }),
       progress(), // 打包进度条
       legacy({
@@ -48,7 +50,8 @@ const config = (type: string) => {
        */
       Components({
         dts: 'src/components.d.ts',
-        resolvers: [VantResolver()]
+        resolvers: [VantResolver()],
+        include: [/\.vue$/, /\.vue\?vue/, /\.(jsx|tsx)$/, /\.md$/]
       }),
       /**
        * 自动导入
@@ -95,12 +98,12 @@ const config = (type: string) => {
       target: 'es2015', // 打包目标
       assetsDir: 'assets', // 指定静态资源放置路径
       assetsInlineLimit: 4096 // 4kb 小于此阈值的导入或引用资源将内联为 base64 编码，以避免额外的 http 请求。设置为 0 可以完全禁用此项。
-    },
-    esbuild: {
-      jsxFactory: 'h',
-      jsxFragment: 'Fragment',
-      jsxInject: "import { h } from 'vue';"
     }
+    // esbuild: {
+    //   // jsxFactory: 'h',
+    //   // jsxFragment: 'Fragment',
+    //   // jsxInject: "import { h, ref } from 'vue'"
+    // }
   }
 }
 export default defineConfig(({ command, mode, ssrBuild }) => {

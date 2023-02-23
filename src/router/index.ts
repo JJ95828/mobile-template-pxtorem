@@ -6,16 +6,13 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('@/views/cover/index.vue')
+    },
+    {
+      path: '/Comp',
+      name: 'Comp',
+      component: () => import('@/views/comp/index')
     }
   ]
-})
-const whitePath = ['/']
-router.beforeEach((to, from, next) => {
-  if (whitePath.includes(to.path)) {
-    next()
-  } else {
-    next('/')
-  }
 })
 
 export default router
